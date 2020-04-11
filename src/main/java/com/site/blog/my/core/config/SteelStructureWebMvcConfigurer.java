@@ -39,6 +39,7 @@ public class SteelStructureWebMvcConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 // 配置不拦截的路径
                 .excludePathPatterns("/user/login")
+                .excludePathPatterns("/common/kaptcha")
                 .excludePathPatterns("/user/register.html")
                 .excludePathPatterns("/user/dist/**");
         // 添加一个拦截器，拦截以/admin为前缀的url路径
