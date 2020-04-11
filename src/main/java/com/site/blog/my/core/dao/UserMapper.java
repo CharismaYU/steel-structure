@@ -1,6 +1,6 @@
 package com.site.blog.my.core.dao;
 
-import com.site.blog.my.core.entity.AdminUser;
+import com.site.blog.my.core.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,14 +16,14 @@ import java.util.List;
 @Component
 @Mapper
 public interface UserMapper {
-    @Insert("insert into tb_user (admin_user_id, login_user_name, login_password, " +
+    @Insert("insert into tb_user (user_id, login_user_name, login_password, " +
             "      nick_name, locked)" +
             "    values (#{adminUserId,jdbcType=INTEGER}, #{loginUserName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, " +
             "      #{nickName,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT})")
-    int insert(AdminUser record);
+    int insert(User record);
 
     @InsertProvider(type = AdminUserSqlBuilder.class, method = "insertSelective")
-    int insertSelective(AdminUser record);
+    int insertSelective(User record);
 
     /**
      * 登陆方法
@@ -32,17 +32,17 @@ public interface UserMapper {
      * @param password
      * @return
      */
-    @Select("select admin_user_id, login_user_name, login_password, login_plaintext_password, nick_name, locked from tb_user where login_user_name = #{userName} AND login_password = #{password} AND locked = 0")
-    AdminUser login(@Param("userName") String userName, @Param("password") String password);
+    @Select("select user_id, login_user_name, login_password, login_plaintext_password, nick_name, locked from tb_user where login_user_name = #{userName} AND login_password = #{password} AND locked = 0")
+    User login(@Param("userName") String userName, @Param("password") String password);
 
-    @Select("select * from tb_user where admin_user_id = #{adminUserId}")
-    AdminUser selectByPrimaryKey(Integer adminUserId);
+    @Select("select * from tb_user where user_id = #{adminUserId}")
+    User selectByPrimaryKey(Integer adminUserId);
 
     @Select("select * from tb_user ")
-    List<AdminUser> findAll();
+    List<User> findAll();
 
     @UpdateProvider(type = AdminUserSqlBuilder.class, method = "updateByPrimaryKeySelective")
-    int updateByPrimaryKeySelective(AdminUser user);
+    int updateByPrimaryKeySelective(User user);
 
     @Update(" update tb_user" +
             "    set login_user_name = #{loginUserName,jdbcType=VARCHAR}," +
@@ -50,16 +50,16 @@ public interface UserMapper {
             "      login_plaintext_password = #{plaintextPassword,jdbcType=VARCHAR}," +
             "      nick_name = #{nickName,jdbcType=VARCHAR}," +
             "      locked = #{locked,jdbcType=TINYINT}" +
-            "    where admin_user_id = #{adminUserId,jdbcType=INTEGER}")
-    int updateByPrimaryKey(AdminUser record);
+            "    where user_id = #{adminUserId,jdbcType=INTEGER}")
+    int updateByPrimaryKey(User record);
 
     class AdminUserSqlBuilder {
-        public String insertSelective(AdminUser user) {
+        public String insertSelective(User user) {
             StringBuilder sql = new StringBuilder();
             StringBuilder sqlValues = new StringBuilder(" values (");
             sql.append("insert into tb_user (");
-            if (user.getAdminUserId() != null) {
-                sql.append("admin_user_id, ");
+            if (user.getUserId() != null) {
+                sql.append("user_id, ");
                 sqlValues.append("#{adminUserId,jdbcType=INTEGER},");
             }
             if (user.getLoginUserName() != null) {
@@ -87,7 +87,7 @@ public interface UserMapper {
             return sql.toString();
         }
 
-        public String updateByPrimaryKeySelective(AdminUser user) {
+        public String updateByPrimaryKeySelective(User user) {
             StringBuilder sql = new StringBuilder();
             sql.append("update blog_config set ");
             if (StringUtil.isNotEmpty(user.getLoginUserName())) {
@@ -105,7 +105,7 @@ public interface UserMapper {
             if (user.getLocked() != null) {
                 sql.append(" locked = #{locked,jdbcType=TINYINT}");
             }
-            sql.append("  where admin_user_id = #{adminUserId,jdbcType=INTEGER}");
+            sql.append("  where user_id = #{adminUserId,jdbcType=INTEGER}");
             return sql.toString();
         }
     }

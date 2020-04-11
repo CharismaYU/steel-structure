@@ -3,12 +3,14 @@ package com.site.blog.my.core.entity;
 import lombok.Data;
 
 /**
- * @author yxn
+ * @Author : yxn
+ * @Date ： 2020-04-11 22:05
+ * @Description : 用户
+ * @Version :  1.0$
  */
 @Data
-public class AdminUser {
-
-    private Integer adminUserId;
+public class User {
+    private Integer userId;
 
     private String loginUserName;
 
@@ -20,12 +22,12 @@ public class AdminUser {
 
     private Byte locked;
 
-    public Integer getAdminUserId() {
-        return adminUserId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAdminUserId(Integer adminUserId) {
-        this.adminUserId = adminUserId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getLoginUserName() {
@@ -74,7 +76,7 @@ public class AdminUser {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", adminUserId=").append(adminUserId);
+        sb.append(", userId=").append(userId);
         sb.append(", loginUserName=").append(loginUserName);
         sb.append(", loginPassword=").append(loginPassword);
         sb.append(", plaintextPassword=").append(plaintextPassword);

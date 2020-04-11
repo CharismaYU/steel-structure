@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author 13
+ * @author yxn
  * @qq交流群 796794009
  * @email 2449207463@qq.com
  * @link http://13blog.site
@@ -39,18 +39,7 @@ public class MyBlogController {
     private ConfigService configService;
     @Resource
     private CategoryService categoryService;
-
-    /**
-     * 首页
-     *
-     * @return
-     */
-    @GetMapping({"/", "/index", "index.html"})
-    public String index(HttpServletRequest request) {
-        //return this.page(request, 1);
-        return "user/login";
-    }
-
+    
     /**
      * 首页 分页数据
      *

@@ -18,6 +18,7 @@
             display: block;
             vertical-align: bottom;
         }
+
         #particles {
             background-color: #F7FAFC;
             position: absolute;
@@ -45,17 +46,20 @@
                 </div>
                 <div class="form-group has-feedback">
                     <span class="fa fa-user form-control-feedback"></span>
-                    <input type="text" id="userName" name="userName" class="form-control" th:placeholder="#{login.userName}"
+                    <input type="text" id="userName" name="userName" class="form-control"
+                           th:placeholder="#{login.userName}"
                            required="true">
                 </div>
                 <div class="form-group has-feedback">
                     <span class="fa fa-lock form-control-feedback"></span>
-                    <input type="password" id="password" name="password" class="form-control" th:placeholder="#{login.password}"
+                    <input type="password" id="password" name="password" class="form-control"
+                           th:placeholder="#{login.password}"
                            required="true">
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <input type="text" class="form-control" name="verifyCode" th:placeholder="#{login.verifyCode}" required="true">
+                        <input type="text" class="form-control" name="verifyCode" th:placeholder="#{login.verifyCode}"
+                               required="true">
                     </div>
                     <div class="col-6">
                         <img alt="单击图片刷新！" class="pointer" th:src="@{/common/kaptcha}"
@@ -65,16 +69,17 @@
                 <div class="form-group has-feedback"></div>
                 <div class="row">
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">登录
-                        </button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
                     </div>
                 </div>
             </form>
-
         </div>
-
         <!-- /.login-card-body -->
     </div>
+    <div class="register-box" style="text-align: center;">
+        <span class="text-center login-with"> <a th:href="@{/user/register.html}">注册</a></span>
+    </div>
+
 </div>
 <!-- /.login-box -->
 

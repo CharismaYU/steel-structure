@@ -1,12 +1,12 @@
 package com.site.blog.my.core.controller.user;
 
-import com.site.blog.my.core.entity.AdminUser;
-import com.site.blog.my.core.service.AdminUserService;
+import com.site.blog.my.core.entity.User;
 import com.site.blog.my.core.service.BlogService;
 import com.site.blog.my.core.service.CategoryService;
 import com.site.blog.my.core.service.CommentService;
 import com.site.blog.my.core.service.LinkService;
 import com.site.blog.my.core.service.TagService;
+import com.site.blog.my.core.service.UserService;
 import com.site.blog.my.core.util.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ import java.util.Locale;
 public class UserController {
 
     @Autowired
-    private AdminUserService adminUserService;
+    private UserService userService;
     @Resource
     private BlogService blogService;
     @Resource
@@ -53,9 +53,9 @@ public class UserController {
         return "user/login";
     }
 
-    @GetMapping({"/test"})
+    @GetMapping({"/register", "/register.html"})
     public String test() {
-        return "user/test";
+        return "user/register";
     }
 
 
@@ -92,10 +92,10 @@ public class UserController {
             session.setAttribute("errorMsg", MessageUtil.getMessage(locale, "login.verifyCodeError"));
             return "user/login";
         }
-        AdminUser adminUser = adminUserService.login(userName, password);
-        if (adminUser != null) {
-            session.setAttribute("loginUser", adminUser.getNickName());
-            session.setAttribute("loginUserId", adminUser.getAdminUserId());
+        User User = userService.login(userName, password);
+        if (User != null) {
+            session.setAttribute("loginUser", User.getNickName());
+            session.setAttribute("loginUserId", User.getUserId());
             //session过期时间设置为3600秒 即一小时
             session.setMaxInactiveInterval(60 * 60 * 1);
             return "redirect:/user/index";
@@ -108,13 +108,13 @@ public class UserController {
     @GetMapping("/profile")
     public String profile(HttpServletRequest request) {
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
-        AdminUser adminUser = adminUserService.getUserDetailById(loginUserId);
-        if (adminUser == null) {
+        User User = userService.getUserDetailById(loginUserId);
+        if (User == null) {
             return "user/login";
         }
         request.setAttribute("path", "profile");
-        request.setAttribute("loginUserName", adminUser.getLoginUserName());
-        request.setAttribute("nickName", adminUser.getNickName());
+        request.setAttribute("loginUserName", User.getLoginUserName());
+        request.setAttribute("nickName", User.getNickName());
         return "user/profile";
     }
 
@@ -127,7 +127,7 @@ public class UserController {
             return MessageUtil.getMessage(language, "parametersIsEmpty");
         }
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
-        if (adminUserService.updatePassword(loginUserId, originalPassword, newPassword)) {
+        if (userService.updatePassword(loginUserId, originalPassword, newPassword)) {
             //修改成功后清空session中的数据，前端控制跳转至登录页
             request.getSession().removeAttribute("loginUserId");
             request.getSession().removeAttribute("loginUser");
@@ -146,7 +146,7 @@ public class UserController {
             return "参数不能为空";
         }
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
-        if (adminUserService.updateName(loginUserId, loginUserName, nickName)) {
+        if (userService.updateName(loginUserId, loginUserName, nickName)) {
             return "success";
         } else {
             return "修改失败";

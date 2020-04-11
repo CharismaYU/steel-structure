@@ -45,6 +45,7 @@ public class SteelStructureWebMvcConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/user/**")
                 // 配置不拦截的路径
                 .excludePathPatterns("/user/login")
+                .excludePathPatterns("/user/register.html")
                 .excludePathPatterns("/user/dist/**");
     }
 

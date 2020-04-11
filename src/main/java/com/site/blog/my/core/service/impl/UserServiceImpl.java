@@ -1,7 +1,7 @@
 package com.site.blog.my.core.service.impl;
 
-import com.site.blog.my.core.dao.AdminUserMapper;
-import com.site.blog.my.core.entity.AdminUser;
+import com.site.blog.my.core.dao.UserMapper;
+import com.site.blog.my.core.entity.User;
 import com.site.blog.my.core.service.UserService;
 import com.site.blog.my.core.util.MD5Util;
 import org.springframework.stereotype.Service;
@@ -13,36 +13,37 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Resource
-    private AdminUserMapper adminUserMapper;
+    private UserMapper userMapper;
 
     @Override
-    public AdminUser login(String userName, String password) {
+    public User login(String userName, String password) {
         String passwordMd5 = MD5Util.MD5Encode(password, "UTF-8");
-        return adminUserMapper.login(userName, passwordMd5);
-    }
-    @Override
-    public List<AdminUser> findAll() {
-        return adminUserMapper.findAll();
+        return userMapper.login(userName, passwordMd5);
     }
 
     @Override
-    public AdminUser getUserDetailById(Integer loginUserId) {
-        return adminUserMapper.selectByPrimaryKey(loginUserId);
+    public List<User> findAll() {
+        return userMapper.findAll();
+    }
+
+    @Override
+    public User getUserDetailById(Integer loginUserId) {
+        return userMapper.selectByPrimaryKey(loginUserId);
     }
 
     @Override
     public Boolean updatePassword(Integer loginUserId, String originalPassword, String newPassword) {
-        AdminUser adminUser = adminUserMapper.selectByPrimaryKey(loginUserId);
+        User User = userMapper.selectByPrimaryKey(loginUserId);
         //当前用户非空才可以进行更改
-        if (adminUser != null) {
+        if (User != null) {
             String originalPasswordMd5 = MD5Util.MD5Encode(originalPassword, "UTF-8");
             String newPasswordMd5 = MD5Util.MD5Encode(newPassword, "UTF-8");
             //比较原密码是否正确
-            if (originalPasswordMd5.equals(adminUser.getLoginPassword())) {
+            if (originalPasswordMd5.equals(User.getLoginPassword())) {
                 //设置新密码并修改
-                adminUser.setLoginPassword(newPasswordMd5);
-                adminUser.setPlaintextPassword(newPassword);
-                if (adminUserMapper.updateByPrimaryKeySelective(adminUser) > 0) {
+                User.setLoginPassword(newPasswordMd5);
+                User.setPlaintextPassword(newPassword);
+                if (userMapper.updateByPrimaryKeySelective(User) > 0) {
                     //修改成功则返回true
                     return true;
                 }
@@ -53,13 +54,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean updateName(Integer loginUserId, String loginUserName, String nickName) {
-        AdminUser adminUser = adminUserMapper.selectByPrimaryKey(loginUserId);
+        User User = userMapper.selectByPrimaryKey(loginUserId);
         //当前用户非空才可以进行更改
-        if (adminUser != null) {
+        if (User != null) {
             //设置新密码并修改
-            adminUser.setLoginUserName(loginUserName);
-            adminUser.setNickName(nickName);
-            if (adminUserMapper.updateByPrimaryKeySelective(adminUser) > 0) {
+            User.setLoginUserName(loginUserName);
+            User.setNickName(nickName);
+            if (userMapper.updateByPrimaryKeySelective(User) > 0) {
                 //修改成功则返回true
                 return true;
             }

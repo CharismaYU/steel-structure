@@ -1,12 +1,12 @@
 package com.site.blog.my.core.service;
 
-import com.site.blog.my.core.entity.AdminUser;
+import com.site.blog.my.core.entity.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    AdminUser login(String userName, String password);
+    User login(String userName, String password);
 
     /**
      * 获取用户信息
@@ -14,7 +14,7 @@ public interface UserService {
      * @param loginUserId
      * @return
      */
-    AdminUser getUserDetailById(Integer loginUserId);
+    User getUserDetailById(Integer loginUserId);
 
     /**
      * 修改当前登录用户的密码
@@ -36,6 +36,6 @@ public interface UserService {
      */
     Boolean updateName(Integer loginUserId, String loginUserName, String nickName);
 
-    List<AdminUser> findAll();
+    List<User> findAll();
 
 }
