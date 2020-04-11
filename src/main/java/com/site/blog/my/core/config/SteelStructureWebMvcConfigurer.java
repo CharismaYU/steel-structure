@@ -41,7 +41,7 @@ public class SteelStructureWebMvcConfigurer implements WebMvcConfigurer {
                 // 配置不拦截的路径
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/common/kaptcha")
-                .excludePathPatterns("/user/register.html")
+                .excludePathPatterns("/user/register")
                 .excludePathPatterns("/user/dist/**");
         // 添加一个拦截器，拦截以/admin为前缀的url路径
         registry.addInterceptor(adminLoginInterceptor)
@@ -109,7 +109,7 @@ public class SteelStructureWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("admin/login");
+        registry.addViewController("/").setViewName("user/login");
     }
 
 }
