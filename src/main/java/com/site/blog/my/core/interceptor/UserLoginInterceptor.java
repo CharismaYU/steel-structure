@@ -22,6 +22,9 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
         if (uri.startsWith("/user") && (null == loginUser || !(loginUser instanceof String))) {
             response.sendRedirect(request.getContextPath() + "/user/login");
             return false;
+        } else if (!uri.startsWith("/admin")) {
+            response.sendRedirect(request.getContextPath() + "/user/login");
+            return false;
         } else {
             request.getSession().removeAttribute("errorMsg");
             return true;

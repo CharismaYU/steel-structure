@@ -32,6 +32,15 @@ public class SteelStructureWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
+        // 添加一个拦截器，拦截以/admin为前缀的url路径
+        registry.addInterceptor(userLoginInterceptor)
+                // 配置拦截的路径
+                .addPathPatterns("/**")
+                // 配置不拦截的路径
+                .excludePathPatterns("/user/login")
+                .excludePathPatterns("/user/register.html")
+                .excludePathPatterns("/user/dist/**");
         // 添加一个拦截器，拦截以/admin为前缀的url路径
         registry.addInterceptor(adminLoginInterceptor)
                 // 配置拦截的路径
@@ -39,14 +48,6 @@ public class SteelStructureWebMvcConfigurer implements WebMvcConfigurer {
                 // 配置不拦截的路径
                 .excludePathPatterns("/admin/login")
                 .excludePathPatterns("/admin/dist/**");
-        // 添加一个拦截器，拦截以/admin为前缀的url路径
-        registry.addInterceptor(userLoginInterceptor)
-                // 配置拦截的路径
-                .addPathPatterns("/user/**")
-                // 配置不拦截的路径
-                .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/register.html")
-                .excludePathPatterns("/user/dist/**");
     }
 
     /**
