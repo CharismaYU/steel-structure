@@ -20,7 +20,7 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String uri = request.getRequestURI();
         Integer userId = UserContextUtil.getCurrentUserId(request.getSession());
-        if (uri.startsWith("/user") && (null == userId)) {
+        if (!uri.startsWith("/admin") && (null == userId)) {
             response.sendRedirect(request.getContextPath() + "/user/login");
             return false;
         } else {
