@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.site.blog.my.core.dao.BlogConfigMapper">
-  <resultMap id="BaseResultMap" type="com.site.blog.my.core.entity.BlogConfig">
+<mapper namespace="com.site.steel.core.dao.BlogConfigMapper">
+  <resultMap id="BaseResultMap" type="com.site.steel.core.entity.BlogConfig">
     <id column="config_name" javaType="String" property="configName" jdbcType="VARCHAR" />
     <result column="config_value" javaType="String" property="configValue" jdbcType="VARCHAR" />
     <result column="create_time" javaType="java.util.Date"  property="createTime" jdbcType="TIMESTAMP" />
@@ -21,7 +21,7 @@
     <include refid="Base_Column_List"/>
     from blog_config
   </select>-->
-  <update id="updateByPrimaryKeySelective" parameterType="com.site.blog.my.core.entity.BlogConfig">
+  <update id="updateByPrimaryKeySelective" parameterType="com.site.steel.core.entity.BlogConfig">
     update blog_config
     <set>
       <if test="configValue != null">
