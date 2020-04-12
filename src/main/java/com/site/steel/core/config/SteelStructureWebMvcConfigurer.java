@@ -30,6 +30,11 @@ public class SteelStructureWebMvcConfigurer implements WebMvcConfigurer {
     private AdminLoginInterceptor adminLoginInterceptor;
     @Autowired
     private UserLoginInterceptor userLoginInterceptor;
+    /**
+     * 不需要登录拦截的url
+     */
+    final String[] notLoginInterceptPaths = {"/dist/user/**", "/user/login", "/user/register*"};
+    final String[] notAdminLoginInterceptPaths = {"/dist/admin/**", "/admin/login"};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -37,19 +42,15 @@ public class SteelStructureWebMvcConfigurer implements WebMvcConfigurer {
         // 添加一个拦截器，拦截以/admin为前缀的url路径
         registry.addInterceptor(userLoginInterceptor)
                 // 配置拦截的路径
-                .addPathPatterns("/**")
+                .addPathPatterns("/user/**")
                 // 配置不拦截的路径
-                .excludePathPatterns("/user/login")
-                .excludePathPatterns("/common/kaptcha")
-                .excludePathPatterns("/user/register*")
-                .excludePathPatterns("/user/dist/**");
+                .excludePathPatterns(notLoginInterceptPaths);
         // 添加一个拦截器，拦截以/admin为前缀的url路径
         registry.addInterceptor(adminLoginInterceptor)
                 // 配置拦截的路径
                 .addPathPatterns("/admin/**")
                 // 配置不拦截的路径
-                .excludePathPatterns("/admin/login")
-                .excludePathPatterns("/admin/dist/**");
+                .excludePathPatterns(notAdminLoginInterceptPaths);
     }
 
     /**

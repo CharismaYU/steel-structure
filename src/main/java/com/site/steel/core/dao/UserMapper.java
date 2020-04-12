@@ -3,11 +3,12 @@ package com.site.steel.core.dao;
 import com.site.steel.core.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.util.StringUtil;
 
@@ -15,13 +16,16 @@ import java.util.List;
 
 @Component
 public interface UserMapper {
+
+    Logger logger = LoggerFactory.getLogger(UserMapper.class);
+
     @Insert("insert into tb_user (user_id, login_user_name, login_password, " +
-            "      nick_name, locked)" +
+            "      nick_name, phone, locked)" +
             "    values (#{adminUserId,jdbcType=INTEGER}, #{loginUserName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, " +
-            "      #{nickName,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT})")
+            "      #{nickName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT})")
     int insert(User record);
 
-    @InsertProvider(type = AdminUserSqlBuilder.class, method = "insertSelective")
+    @InsertProvider(type = UserSqlBuilder.class, method = "insertSelective")
     int insertSelective(User record);
 
     /**
@@ -31,7 +35,7 @@ public interface UserMapper {
      * @param password
      * @return
      */
-    @Select("select user_id, login_user_name, login_password, login_plaintext_password, nick_name, locked from tb_user where login_user_name = #{userName} AND login_password = #{password} AND locked = 0")
+    @Select("select user_id, login_user_name, login_password, login_plaintext_password, nick_name, phone, locked from tb_user where login_user_name = #{userName} AND login_password = #{password} AND locked = 0")
     User login(@Param("userName") String userName, @Param("password") String password);
 
     @Select("select * from tb_user where user_id = #{adminUserId}")
@@ -40,7 +44,7 @@ public interface UserMapper {
     @Select("select * from tb_user ")
     List<User> findAll();
 
-    @UpdateProvider(type = AdminUserSqlBuilder.class, method = "updateByPrimaryKeySelective")
+    @UpdateProvider(type = UserSqlBuilder.class, method = "updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(User user);
 
     @Update(" update tb_user" +
@@ -48,11 +52,12 @@ public interface UserMapper {
             "      login_password = #{loginPassword,jdbcType=VARCHAR}," +
             "      login_plaintext_password = #{plaintextPassword,jdbcType=VARCHAR}," +
             "      nick_name = #{nickName,jdbcType=VARCHAR}," +
+            "      phone, = #{phone,jdbcType=VARCHAR}," +
             "      locked = #{locked,jdbcType=TINYINT}" +
             "    where user_id = #{adminUserId,jdbcType=INTEGER}")
     int updateByPrimaryKey(User record);
 
-    class AdminUserSqlBuilder {
+    class UserSqlBuilder {
         public String insertSelective(User user) {
             StringBuilder sql = new StringBuilder();
             StringBuilder sqlValues = new StringBuilder(" values (");
@@ -77,12 +82,16 @@ public interface UserMapper {
                 sql.append("nick_name, ");
                 sqlValues.append("#{nickName,jdbcType=VARCHAR},");
             }
+            if (user.getPhone() != null) {
+                sql.append("phone, ");
+                sqlValues.append("#{phone,jdbcType=VARCHAR},");
+            }
             if (user.getLocked() != null) {
                 sql.append("locked) ");
                 sqlValues.append("#{locked,jdbcType=TINYINT} )");
             }
             sql.append(sqlValues);
-            System.out.println("sql语句===" + sql.toString());
+            logger.info("sql语句=== {}", sql.toString());
             return sql.toString();
         }
 
@@ -100,6 +109,9 @@ public interface UserMapper {
             }
             if (StringUtil.isNotEmpty(user.getNickName())) {
                 sql.append(" nick_name = #{nickName,jdbcType=VARCHAR}, ");
+            }
+            if (StringUtil.isNotEmpty(user.getPhone())) {
+                sql.append(" phone = #{phone,jdbcType=VARCHAR}, ");
             }
             if (user.getLocked() != null) {
                 sql.append(" locked = #{locked,jdbcType=TINYINT}");

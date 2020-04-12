@@ -10,16 +10,19 @@ import lombok.Data;
  */
 @Data
 public class User {
+    // 主键
     private Integer userId;
-
+    // 用户名
     private String loginUserName;
-
+    // 密码
     private String loginPassword;
-
+    // 明文密码
     private String plaintextPassword;
-
+    // 昵称
     private String nickName;
-
+    // 手机号
+    private String phone;
+    //
     private Byte locked;
 
     public Integer getUserId() {
@@ -60,6 +63,14 @@ public class User {
 
     public void setNickName(String nickName) {
         this.nickName = nickName == null ? null : nickName.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Byte getLocked() {

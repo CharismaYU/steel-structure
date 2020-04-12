@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.util.StringUtil;
 
@@ -16,6 +18,9 @@ import java.util.List;
 @Component
 @Mapper
 public interface AdminUserMapper {
+
+    Logger logger = LoggerFactory.getLogger(AdminUserMapper.class);
+
     @Insert("insert into tb_admin_user (admin_user_id, login_user_name, login_password, " +
             "      nick_name, locked)" +
             "    values (#{adminUserId,jdbcType=INTEGER}, #{loginUserName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, " +
@@ -83,7 +88,7 @@ public interface AdminUserMapper {
                 sqlValues.append("#{locked,jdbcType=TINYINT} )");
             }
             sql.append(sqlValues);
-            System.out.println("sql语句===" + sql.toString());
+            logger.info("sql语句=== {}", sql.toString());
             return sql.toString();
         }
 
