@@ -3,6 +3,7 @@ package com.site.steel.core.util;
 import com.site.steel.core.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @Author : yxn
@@ -17,12 +18,12 @@ public class UserContextUtil {
     /**
      * 获取当前AppUser
      *
-     * @param request
+     * @param session
      * @return
      */
-    public static User getCurrentUser(HttpServletRequest request) {
-        if (request != null) {
-            Object user = request.getAttribute(REQUEST_ATTRIBUTE_CURRENT_USER);
+    public static User getCurrentUser(HttpSession session) {
+        if (session != null) {
+            Object user = session.getAttribute(REQUEST_ATTRIBUTE_CURRENT_USER);
             if (user != null && user instanceof User) {
                 return (User) user;
             }
@@ -30,15 +31,15 @@ public class UserContextUtil {
         return null;
     }
 
-    public static void setCurrentUser(HttpServletRequest request, User user) {
-        if (request == null) {
+    public static void setCurrentUser(HttpSession session, User user) {
+        if (session == null) {
             return;
         }
         if (user != null) {
-            request.setAttribute(REQUEST_ATTRIBUTE_CURRENT_USER, user);
-            request.setAttribute(REQUEST_ATTRIBUTE_CURRENT_USER_ID, user.getUserId());
+            session.setAttribute(REQUEST_ATTRIBUTE_CURRENT_USER, user);
+            session.setAttribute(REQUEST_ATTRIBUTE_CURRENT_USER_ID, user.getUserId());
         } else {
-            request.removeAttribute(REQUEST_ATTRIBUTE_CURRENT_USER);
+            session.removeAttribute(REQUEST_ATTRIBUTE_CURRENT_USER);
         }
     }
 
@@ -47,14 +48,14 @@ public class UserContextUtil {
      *
      * @return
      */
-    public static Integer getCurrentUserId(HttpServletRequest request) {
-        if (request != null) {
-            Integer userId = (Integer) request.getAttribute(REQUEST_ATTRIBUTE_CURRENT_USER_ID);
+    public static Integer getCurrentUserId(HttpSession session) {
+        if (session != null) {
+            Integer userId = (Integer) session.getAttribute(REQUEST_ATTRIBUTE_CURRENT_USER_ID);
             if (userId != null) {
                 return userId;
             }
         }
-        User curUser = getCurrentUser(request);
+        User curUser = getCurrentUser(session);
         return curUser != null ? curUser.getUserId() : null;
     }
 }

@@ -19,7 +19,7 @@ public class AdminLoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String uri = request.getRequestURI();
-        Integer currentUserId = AdminContextUtil.getCurrentUserId(request);
+        Integer currentUserId = AdminContextUtil.getCurrentUserId(request.getSession());
         if (uri.startsWith("/admin") && (null == currentUserId)) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return false;

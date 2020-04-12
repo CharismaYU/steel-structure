@@ -3,6 +3,7 @@ package com.site.steel.core.util;
 import com.site.steel.core.entity.AdminUser;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @Author : yxn
@@ -12,17 +13,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AdminContextUtil {
     public static final String REQUEST_ATTRIBUTE_CURRENT_USER = AdminUser.class.getName();
-    public static final String REQUEST_ATTRIBUTE_CURRENT_USER_ID = "currentUserId";
+    public static final String REQUEST_ATTRIBUTE_CURRENT_USER_ID = "currentAdminUserId";
 
     /**
      * 获取当前AppUser
      *
-     * @param request
+     * @param session
      * @return
      */
-    public static AdminUser getCurrentUser(HttpServletRequest request) {
-        if (request != null) {
-            Object user = request.getAttribute(REQUEST_ATTRIBUTE_CURRENT_USER);
+    public static AdminUser getCurrentUser(HttpSession session) {
+        if (session != null) {
+            Object user = session.getAttribute(REQUEST_ATTRIBUTE_CURRENT_USER);
             if (user != null && user instanceof AdminUser) {
                 return (AdminUser) user;
             }
@@ -30,15 +31,15 @@ public class AdminContextUtil {
         return null;
     }
 
-    public static void setCurrentUser(HttpServletRequest request, AdminUser user) {
-        if (request == null) {
+    public static void setCurrentUser(HttpSession session, AdminUser user) {
+        if (session == null) {
             return;
         }
         if (user != null) {
-            request.setAttribute(REQUEST_ATTRIBUTE_CURRENT_USER, user);
-            request.setAttribute(REQUEST_ATTRIBUTE_CURRENT_USER_ID, user.getAdminUserId());
+            session.setAttribute(REQUEST_ATTRIBUTE_CURRENT_USER, user);
+            session.setAttribute(REQUEST_ATTRIBUTE_CURRENT_USER_ID, user.getAdminUserId());
         } else {
-            request.removeAttribute(REQUEST_ATTRIBUTE_CURRENT_USER);
+            session.removeAttribute(REQUEST_ATTRIBUTE_CURRENT_USER);
         }
     }
 
@@ -47,14 +48,14 @@ public class AdminContextUtil {
      *
      * @return
      */
-    public static Integer getCurrentUserId(HttpServletRequest request) {
-        if (request != null) {
-            Integer userId = (Integer) request.getAttribute(REQUEST_ATTRIBUTE_CURRENT_USER_ID);
+    public static Integer getCurrentUserId(HttpSession session) {
+        if (session != null) {
+            Integer userId = (Integer) session.getAttribute(REQUEST_ATTRIBUTE_CURRENT_USER_ID);
             if (userId != null) {
                 return userId;
             }
         }
-        AdminUser curUser = getCurrentUser(request);
+        AdminUser curUser = getCurrentUser(session);
         return curUser != null ? curUser.getAdminUserId() : null;
     }
 }

@@ -78,9 +78,8 @@ public class AdminController extends BaseApiController {
     public String login(@RequestParam("userName") String userName,
                         @RequestParam("password") String password,
                         @RequestParam("verifyCode") String verifyCode,
-                        HttpServletRequest request) {
+                        HttpSession session) {
         // 国际化
-        HttpSession session = request.getSession();
         String language = session.getAttribute("language") + "";
         Locale locale = MessageUtil.getLocale(language);
         if (StringUtils.isEmpty(verifyCode)) {
@@ -100,7 +99,7 @@ public class AdminController extends BaseApiController {
         if (adminUser != null) {
             session.setAttribute("loginUser", adminUser.getNickName());
             session.setAttribute("loginUserId", adminUser.getAdminUserId());
-            AdminContextUtil.setCurrentUser(request, adminUser);
+            AdminContextUtil.setCurrentUser(session, adminUser);
             //session过期时间设置为3600秒 即一小时
             session.setMaxInactiveInterval(60 * 60 * 1);
             return "redirect:/admin/index";
