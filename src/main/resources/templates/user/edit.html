@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<header th:replace="admin/header::header-fragment"></header>
+<header th:replace="user/header::header-fragment"></header>
 <body class="hold-transition sidebar-mini">
-<link th:href="@{/static/plugins/editormd/css/editormd.css}" rel="stylesheet"/>
-<link th:href="@{/static/plugins/tagsinput/jquery.tagsinput.css}" rel="stylesheet"/>
-<link th:href="@{/static/plugins/select2/select2.css}" rel="stylesheet"/>
+<link th:href="@{/plugins/editormd/css/editormd.css}" rel="stylesheet"/>
+<link th:href="@{/plugins/tagsinput/jquery.tagsinput.css}" rel="stylesheet"/>
+<link th:href="@{/plugins/select2/select2.css}" rel="stylesheet"/>
 <div class="wrapper">
     <!-- 引入页面头header-fragment -->
-    <div th:replace="admin/header::header-nav"></div>
+    <div th:replace="user/header::header-nav"></div>
     <!-- 引入工具栏sidebar-fragment -->
-    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <div th:replace="user/sidebar::sidebar-fragment(${path})"></div>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -93,7 +93,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <th:block th:if="${null == blog}">
-                                            <img id="blogCoverImage" src="/static/dist/admin/img/img-upload.png"
+                                            <img id="blogCoverImage" src="/dist/admin/img/img-upload.png"
                                                  style="height: 64px;width: 64px;">
                                         </th:block>
                                         <th:block th:unless="${null == blog}">
@@ -145,27 +145,27 @@
     </div>
     <!-- /.content-wrapper -->
     <!-- 引入页脚footer-fragment -->
-    <div th:replace="admin/footer::footer-fragment"></div>
+    <div th:replace="user/footer::footer-fragment"></div>
 </div>
 <!-- jQuery -->
-<script th:src="@{/static/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
 <!-- jQuery UI 1.11.4 -->
-<script th:src="@{/static/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<script th:src="@{/plugins/jQueryUI/jquery-ui.min.js}"></script>
 <!-- Bootstrap 4 -->
-<script th:src="@{/static/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <!-- AdminLTE App -->
-<script th:src="@{/static/dist/admin/js/adminlte.min.js}"></script>
+<script th:src="@{/dist/admin/js/adminlte.min.js}"></script>
 <!-- editor.md -->
-<script th:src="@{/static/plugins/editormd/editormd.min.js}"></script>
+<script th:src="@{/plugins/editormd/editormd.min.js}"></script>
 <!-- tagsinput -->
-<script th:src="@{/static/plugins/tagsinput/jquery.tagsinput.min.js}"></script>
+<script th:src="@{/plugins/tagsinput/jquery.tagsinput.min.js}"></script>
 <!-- Select2 -->
-<script th:src="@{/static/plugins/select2/select2.full.min.js}"></script>
+<script th:src="@{/plugins/select2/select2.full.min.js}"></script>
 <!-- sweetalert -->
-<script th:src="@{/static/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
 <!-- ajaxupload -->
-<script th:src="@{/static/plugins/ajaxupload/ajaxupload.js}"></script>
-<script th:src="@{/static/dist/admin/js/public.js}"></script>
-<script th:src="@{/static/dist/admin/js/edit.js}"></script>
+<script th:src="@{/plugins/ajaxupload/ajaxupload.js}"></script>
+<script th:src="@{/dist/admin/js/public.js}"></script>
+<script th:src="@{/dist/admin/js/edit.js}"></script>
 </body>
 </html>
