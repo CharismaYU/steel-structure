@@ -1,6 +1,7 @@
 package com.site.steel.core.controller.user;
 
 import com.site.steel.core.controller.BaseApiController;
+import com.site.steel.core.controller.vo.UserVO;
 import com.site.steel.core.entity.User;
 import com.site.steel.core.service.BlogService;
 import com.site.steel.core.service.CategoryService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,22 +63,14 @@ public class UserController extends BaseApiController {
     }
 
     @PostMapping({"/register"})
-    public String register(@RequestParam("userName") String userName,
-                           @RequestParam("password") String password, HttpServletRequest request) {
-        String language = request.getSession().getAttribute("language") + "";
-        if (StringUtils.isEmpty(password)) {
-            return MessageUtil.getMessage(language, "parametersIsEmpty");
+    public String register(@RequestBody UserVO userVO, HttpServletRequest request) {
+        if (userVO == null || userVO.getUserId() != null) {
+            return "修改失败";
         }
-        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
-        //if (userService.updatePassword(loginUserId, originalPassword, newPassword)) {
-        //修改成功后清空session中的数据，前端控制跳转至登录页
-        request.getSession().removeAttribute("loginUserId");
-        request.getSession().removeAttribute("loginUser");
-        request.getSession().removeAttribute("errorMsg");
-        //  return "success";
-        //} else {
+        if (userService.insert(userVO)) {
+            return "修改成功";
+        }
         return "修改失败";
-        // }
     }
 
 
@@ -115,9 +109,8 @@ public class UserController extends BaseApiController {
         }
         User user = userService.login(userName, password);
         if (user != null) {
-            session.setAttribute("loginUser", user.getNickName());
-            session.setAttribute("loginUserId", user.getUserId());
             UserContextUtil.setCurrentUser(session, user);
+            session.setAttribute("userName", user.getLoginUserName());
             //session过期时间设置为3600秒 即一小时
             session.setMaxInactiveInterval(60 * 60 * 1);
             return "redirect:/user/index";
@@ -126,6 +119,17 @@ public class UserController extends BaseApiController {
             return "user/login";
         }
     }
+
+    @PostMapping("/getById")
+    public String getById(@RequestParam("userId") int userId, HttpServletRequest request) {
+        User User = userService.getUserDetailById(userId);
+        if (User == null) {
+            return "user/login";
+        }
+        request.setAttribute("user", User);
+        return "user/profile";
+    }
+
 
     @GetMapping("/profile")
     public String profile(HttpServletRequest request) {

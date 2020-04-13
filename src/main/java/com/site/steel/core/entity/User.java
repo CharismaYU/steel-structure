@@ -9,7 +9,7 @@ import lombok.Data;
  * @Version :  1.0$
  */
 @Data
-public class User {
+public class User extends AbstractAuditable {
     // 主键
     private Integer userId;
     // 用户名

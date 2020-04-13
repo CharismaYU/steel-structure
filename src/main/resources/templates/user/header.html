@@ -32,13 +32,8 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
-            <a class="nav-link" th:href="@{/}">
-                <i class="fa fa-paper-plane">&nbsp;&nbsp;博客首页</i>
-            </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="fa fa-user">&nbsp;&nbsp;作者</i>
+            <a class="nav-link" data-toggle="dropdown" href="@{/user/getById?userId=${session.currentUserId}}">
+                <span th:text="${'Hi,'+session.userName}"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <div class="dropdown-divider"></div>

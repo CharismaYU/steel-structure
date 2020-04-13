@@ -3,15 +3,15 @@
 
  Source Server         : mysql
  Source Server Type    : MySQL
- Source Server Version : 80011
+ Source Server Version : 50726
  Source Host           : localhost:3306
  Source Schema         : steel_structure
 
  Target Server Type    : MySQL
- Target Server Version : 80011
+ Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 11/04/2020 22:10:24
+ Date: 13/04/2020 18:12:42
 */
 
 SET NAMES utf8mb4;
@@ -46,37 +46,6 @@ INSERT INTO `blog_config` VALUES ('yourEmail', '943039836@qq.com', '2018-11-11 2
 INSERT INTO `blog_config` VALUES ('yourName', '南', '2018-11-11 20:33:20', '2019-08-01 04:17:36');
 
 -- ----------------------------
--- Table structure for generator_test
--- ----------------------------
-DROP TABLE IF EXISTS `generator_test`;
-CREATE TABLE `generator_test`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `test` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '测试字段',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of generator_test
--- ----------------------------
-
--- ----------------------------
--- Table structure for jdbc_test
--- ----------------------------
-DROP TABLE IF EXISTS `jdbc_test`;
-CREATE TABLE `jdbc_test`  (
-  `type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型',
-  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of jdbc_test
--- ----------------------------
-INSERT INTO `jdbc_test` VALUES ('com.zaxxer.hikari.HikariDataSource', 'hikari数据源');
-INSERT INTO `jdbc_test` VALUES ('org.apache.commons.dbcp2.BasicDataSource', 'dbcp2数据源');
-INSERT INTO `jdbc_test` VALUES ('test', '测试类');
-INSERT INTO `jdbc_test` VALUES ('类别2', '测试类2');
-
--- ----------------------------
 -- Table structure for tb_admin_user
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_admin_user`;
@@ -87,33 +56,16 @@ CREATE TABLE `tb_admin_user`  (
   `login_plaintext_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员登陆明文密码',
   `nick_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员显示昵称',
   `locked` tinyint(4) NULL DEFAULT 0 COMMENT '是否锁定 0未锁定 1已锁定无法登陆',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`admin_user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_admin_user
 -- ----------------------------
-INSERT INTO `tb_admin_user` VALUES (1, 'admin', '200820e3227815ed1756a6b531e7e0d2', 'qwe123', '淘气的香蕉', 0);
+INSERT INTO `tb_admin_user` VALUES (1, 'admin', '200820e3227815ed1756a6b531e7e0d2', 'qwe123', '淘气的香蕉', 0, NULL, NULL);
 
--- ----------------------------
--- Table structure for tb_user
--- ----------------------------
-DROP TABLE IF EXISTS `tb_user`;
-CREATE TABLE `tb_user`  (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '管理员id',
-  `login_user_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员登陆名称',
-  `login_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员登陆密码',
-  `login_plaintext_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员登陆明文密码',
-  `nick_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员显示昵称',
-  `phone` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机号',
-  `locked` tinyint(4) NULL DEFAULT 0 COMMENT '是否锁定 0未锁定 1已锁定无法登陆',
-  PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of tb_admin_user
--- ----------------------------
-INSERT INTO `tb_user` VALUES (1, 'admin', '200820e3227815ed1756a6b531e7e0d2', 'qwe123', '淘气的香蕉', '13696854563', 0);
 -- ----------------------------
 -- Table structure for tb_blog
 -- ----------------------------
@@ -295,21 +247,6 @@ INSERT INTO `tb_link` VALUES (18, 2, '《Spring Boot 入门及前后端分离项
 INSERT INTO `tb_link` VALUES (19, 2, '《玩转Spring Boot 系列》', 'https://www.shiyanlou.com/courses/1274', 'SpringBoot实战课程', 20, 0, '2019-04-24 16:10:30');
 
 -- ----------------------------
--- Table structure for tb_test
--- ----------------------------
-DROP TABLE IF EXISTS `tb_test`;
-CREATE TABLE `tb_test`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `test_info` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '测试内容',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of tb_test
--- ----------------------------
-INSERT INTO `tb_test` VALUES (1, 'SpringBoot-MyBatis测试');
-
--- ----------------------------
 -- Table structure for tb_user
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_user`;
@@ -319,13 +256,16 @@ CREATE TABLE `tb_user`  (
   `login_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员登陆密码',
   `login_plaintext_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员登陆明文密码',
   `nick_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员显示昵称',
+  `phone` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
   `locked` tinyint(4) NULL DEFAULT 0 COMMENT '是否锁定 0未锁定 1已锁定无法登陆',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
-INSERT INTO `tb_user` VALUES (1, 'admin', '200820e3227815ed1756a6b531e7e0d2', 'qwe123', '淘气的香蕉', 0);
+INSERT INTO `tb_user` VALUES (1, 'admin', '200820e3227815ed1756a6b531e7e0d2', 'qwe123', '淘气的香蕉', NULL, 0, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -1,9 +1,13 @@
 package com.site.steel.core.service;
 
+import com.site.steel.core.controller.vo.UserVO;
 import com.site.steel.core.entity.User;
 
 import java.util.List;
 
+/**
+ * @author yuxuenan
+ */
 public interface UserService {
 
     User login(String userName, String password);
@@ -38,4 +42,5 @@ public interface UserService {
 
     List<User> findAll();
 
+    boolean insert(UserVO userVO);
 }

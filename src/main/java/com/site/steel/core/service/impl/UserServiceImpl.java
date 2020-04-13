@@ -1,12 +1,16 @@
 package com.site.steel.core.service.impl;
 
+import com.site.steel.core.controller.vo.UserVO;
 import com.site.steel.core.dao.UserMapper;
 import com.site.steel.core.entity.User;
 import com.site.steel.core.service.UserService;
 import com.site.steel.core.util.MD5Util;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.List;
 
 @Service("UserService")
@@ -24,6 +28,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userMapper.findAll();
+    }
+
+    @Override
+    public boolean insert(UserVO userVO) {
+        User user = new User();
+        user.setLoginUserName(userVO.getLoginUserName());
+        user.setPlaintextPassword(userVO.getLoginPassword());
+        user.setLoginPassword(MD5Util.MD5Encode(userVO.getLoginPassword(), "UTF-8"));
+        user.setNickName(userVO.getNickName());
+        user.setPhone(userVO.getPhone());
+        user.setUpdateTime(new Date());
+        user.setCreateTime(new Date());
+        int insert = userMapper.insert(user);
+        if (insert > 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override

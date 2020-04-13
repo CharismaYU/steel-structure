@@ -31,6 +31,7 @@
         <commonmark.version>0.8.0</commonmark.version>
         <commons-lang3.version>3.10</commons-lang3.version>
         <commonmark-ext-gfm-tables.version>0.14.0</commonmark-ext-gfm-tables.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
     </properties>
 
     <dependencies>
@@ -108,6 +109,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
         </dependency>
     </dependencies>
 
