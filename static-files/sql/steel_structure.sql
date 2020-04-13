@@ -96,6 +96,25 @@ CREATE TABLE `tb_admin_user`  (
 INSERT INTO `tb_admin_user` VALUES (1, 'admin', '200820e3227815ed1756a6b531e7e0d2', 'qwe123', '淘气的香蕉', 0);
 
 -- ----------------------------
+-- Table structure for tb_user
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_user`;
+CREATE TABLE `tb_user`  (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '管理员id',
+  `login_user_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员登陆名称',
+  `login_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员登陆密码',
+  `login_plaintext_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员登陆明文密码',
+  `nick_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员显示昵称',
+  `phone` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机号',
+  `locked` tinyint(4) NULL DEFAULT 0 COMMENT '是否锁定 0未锁定 1已锁定无法登陆',
+  PRIMARY KEY (`user_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_admin_user
+-- ----------------------------
+INSERT INTO `tb_user` VALUES (1, 'admin', '200820e3227815ed1756a6b531e7e0d2', 'qwe123', '淘气的香蕉', '13696854563', 0);
+-- ----------------------------
 -- Table structure for tb_blog
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_blog`;
